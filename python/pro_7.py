@@ -3,33 +3,26 @@
 def list_methods(value):
     lenn = [1, 2, 3, 4, 5,5]
     obj = {
-        'length': len(lenn),
-        'max': max(lenn),
-        'list': list(),
-        'append': lenn.append(6),
-        'count': lenn.count(5),
-        'extend': lenn.extend([7, 8, 9, 10]),
-        'index': lenn.index(2),
-        'insert': lenn.insert(2, 11),
-        'pop': lenn.pop(),
-        'remove': lenn.remove(11),
-        'reverse': lenn.reverse(),
-        'sort': lenn.sort()
+        '1': len(lenn),
+        '2': max(lenn),
+        '3': list(),
+        '4': lenn.append(6),
+        '5': lenn.count(5),
+        '6': lenn.extend([7, 8, 9, 10]),
+        '7': lenn.index(2),
+        '8': lenn.insert(2, 11),
+        '9': lenn.pop(),
+        '10': lenn.remove(11),
+        '11': lenn.reverse(),
+        '12': lenn.sort()
     }
     return obj.get(value, "Value is something else")
 
+print("list methods")
+print("1.length()\n2.max()\n3.list()\n4.append()\n5.count()\n6.extend()\n7.index()\n8.insert()\n9.pop()\n10.remove()\n11.reverse()\n12.sort()")
+
+value = input("Enter the value: ")
 # Usage
-print("length is :-",list_methods('length'))
-print("max is :-",list_methods('max'))
-print("list is :-",list_methods('list'))
-print("append is :-",list_methods('append'))
-print("count is :-",list_methods('count'))
-print("extend is :-",list_methods('extend'))
-print("index is :-",list_methods('index'))
-print("insert is :-",list_methods('insert'))
-print("pop is :-",list_methods('pop'))
-print("remove is :-",list_methods('remove'))
-print("reverse is :-",list_methods('reverse'))
-print("sort is :-",list_methods('sort'))
+print("length is :-",list_methods(value))
 
 
