@@ -1,13 +1,14 @@
-def match_case(value):
-    num1=input("Enter Number 1:")
-    num2=input("Enter Number 2:")  
-    match value:
-        case 1:
-            return "It's one"
-        case 2 | 3:
-            return "It's two or three"
-        case _:
-            return "Something else"
+#list oprations
 
-print(match_case(1)) 
-print(match_case(3))  
+def lsit_methods(value):
+    lenn = [1, 2, 3, 4, 5]
+    obj = {
+        'length': len(lenn),
+        'max': max(lenn),
+    }
+    return obj.get(value, "Value is something else")
+
+# Usage
+print("length is :-",lsit_methods('length'))
+print("max is :-",lsit_methods('max'))
+
