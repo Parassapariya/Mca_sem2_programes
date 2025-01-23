@@ -6,7 +6,7 @@ def list_methods(value):
         '1': len(lenn),
         '2': max(lenn),
         '3': list(),
-        '4': (lenn.append(6), lenn)[1],
+        '4': (lenn.append(6), lenn),
         '5': lenn.count(5),
         '6': lenn.extend([7, 8, 9, 10]),
         '7': lenn.index(2),
