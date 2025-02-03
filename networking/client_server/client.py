@@ -14,6 +14,6 @@ while True:
     if message.lower() == 'bye':
         break
     data = client_socket.recv(1024).decode()
-    print("Server:", data)
+    print("Server: {}".format(data))
 # Close the connection
 client_socket.close()
