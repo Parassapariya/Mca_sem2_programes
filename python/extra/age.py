@@ -7,8 +7,8 @@ except ValueError as e:
     print(e)
 else:
     if age > 18:
-        print("You are eligible to play this game.")
+        print("You are eligible for vote.")
     else:
-        print("You are not eligible to play this game.")
+        print("You are not eligible for vote.")
 finally:
     print("Program execution completed.")
