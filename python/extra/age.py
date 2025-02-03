@@ -1,4 +1,3 @@
-#enter valide age using try catch
 try:
     age = int(input("Enter your age: "))
     if age < 0:
