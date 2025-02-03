@@ -1,23 +1,30 @@
 #using socket programming clent server message passing  
 import socket
-HOST = 'localhost'
+HOST = ''
 PORT = 8080
 # Create a socket object
-client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-# Connect to the server
-client_socket.connect((HOST, PORT))
-# Print the connection information
-
-print("Connected to {}:{}".format(HOST, PORT))
-# Send and receive messages
+server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+# Bind to the port
+server_socket.bind((HOST, PORT))
+# Listen for incoming connections
+server_socket.listen(5)
+print("Listening on port {}:{}".format(HOST,PORT))
+# Accept the connection
+conn, addr = server_socket.accept()
+print("Connection from: {}:{}".format(addr[0], addr[1]))
+# Receive and send messages
 while True:
+    data = conn.recv(1024).decode()
+    if not data:
+        break
+    print("Client: {}".format(data))
     message = input("Enter your message: ")
-    client_socket.sendall(message.encode())
+    conn.sendall(message.encode())
     if message.lower() == 'bye':
         break
-    data = client_socket.recv(1024).decode()
-    print("Server:", data)
 # Close the connection
-client_socket.close()
+conn.close()
+server_socket.close()
 #using socket programming clent server message passing
 
