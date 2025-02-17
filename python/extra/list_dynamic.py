@@ -13,8 +13,7 @@
 def add_student():
     name = input("Enter student name: ")
     roll = int(input("Enter student roll number: "))
-    students.append({'name': name
-                        , 'roll': roll})
+    students.append({'name': name, 'roll': roll})
     print("Student added successfully")
 
 def search_student():
