@@ -1,0 +1,18 @@
+Home page - homepage1. html
+
+Student module:
+registration: index2up.html - register new student
+login: index3.html - login into the system 
+All transport details: RetriveTransport.html - all the available 
+transport details are viewed here
+Book Transport: booktransport.html - submit and delete booking
+Give feedback: ReviewPage.html - enter a feedback for transport company
+
+Transport Authority module:
+Login: Login.html
+Enter transport details: AddTransport.html - Add, update and delete transport 
+details
+View booking details: RetriveBookingDeatils.html - Details of students who
+booked transport will be displayed here.
+Retrive feedbacks: Feedbacks given by students will be displayed here
+
