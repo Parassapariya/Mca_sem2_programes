@@ -9,3 +9,8 @@ try:
 except MyCustomException as e:
     # Handle the custom exception
     print(f"Custom exception raised: {e.message}")
+
+
+# Output:
+# Custom exception raised: This is a custom exception message.
+# Define a custom exception class

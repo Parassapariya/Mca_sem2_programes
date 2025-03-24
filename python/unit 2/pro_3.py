@@ -18,3 +18,8 @@ except Exception as e:
 finally:
     # Optional cleanup or final statements
     print("Execution completed.")
+
+# Output:
+# Cannot divide
+# Execution completed.
+
