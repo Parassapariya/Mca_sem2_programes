@@ -19,5 +19,6 @@ for num in listofnumber:
 
 print("Armstrong numbers in the list:", armstrong_numbers)
 
-
-
+#Enter number 1: 1
+#Enter number 2: 50
+#Armstrong numbers in the list: [1]

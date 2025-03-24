@@ -18,3 +18,7 @@ else:
     print("Error! Invalid arithmatic oprator.")
 
 
+#Enter first number: 5
+#Enter second number: 2
+#Enter arithmatic oprator (+, -, *, /): +
+#7

@@ -17,3 +17,10 @@ elif p >= 60 and p < 70:
     print("Grade: C")
 else:
     print("Fail")
+
+#Enter 1st Subject Mark:60
+#Enter 2nd Subject Mark:80
+#Enter 3rd Subject Mark:70
+#Enter 4th Subject Mark:70
+#Percentage is:  70.0
+#Grade: B
