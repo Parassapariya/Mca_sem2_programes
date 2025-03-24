@@ -1,0 +1,22 @@
+1)Which watch brands dominate the market in terms of listings and sales?
+
+2)Analyze the correlation between brand popularity and seller ratings
+
+3)Create a brand-wise price distribution analysis.
+
+4)Is there a significant price difference between quartz and automatic watches
+
+5)How does case material impact the price and demand for watches?
+
+6)Are certain bracelet materials more associated with luxury brands?
+
+7)What is the correlation between watch shape and its price range?
+
+8)How does bracelet material affect customer preference across different brands?
+
+9)Do vintage watches (pre-2000) have a higher resale value than modern ones?
+
+10)What is the average price difference between new, like-new, and used watches?
+
+11)How does the condition of a watch affect its price in different brands?
+
