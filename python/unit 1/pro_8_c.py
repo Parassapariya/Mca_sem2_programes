@@ -4,3 +4,6 @@ def reverse_string(s):
 
 string = input("Enter a string: ")
 print("Reversed string is: ", reverse_string(string))
+
+#Enter a string: hello world
+#Reversed string is:  dlrow olleh

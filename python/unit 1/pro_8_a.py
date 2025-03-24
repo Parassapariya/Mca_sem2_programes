@@ -9,3 +9,6 @@ def count_vowel(string):
 
 string = input("Enter a string: ")
 print("Number of vowels in the string:", count_vowel(string))
+
+#Enter a string: hello world
+#Number of vowels in the string: 3

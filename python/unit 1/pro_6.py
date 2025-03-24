@@ -17,3 +17,12 @@ def histogram(values):
 numbers = input()
 numbers = [int(x) for x in numbers.split()]
 histogram(numbers)
+
+
+#Enter the numbers separated by space
+#1 2 3 4 5 
+#*
+#**
+#***
+#****
+#*****

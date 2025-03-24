@@ -12,3 +12,5 @@ if is_palindrome(string):
 else:
     print("The string is not a palindrome.")
     
+#Enter a string: madam
+#The string is a palindrome.

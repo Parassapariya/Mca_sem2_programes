@@ -34,3 +34,21 @@ print("12. sort()")
 
 value = input("Enter the operation number: ")
 print("Result:", list_methods(value)) 
+
+
+# Output:
+# List methods:
+# 1. len()
+# 2. max()
+# 3. list()
+# 4. append()
+# 5. count()
+# 6. extend()
+# 7. index()
+# 8. insert()
+# 9. pop()
+# 10. remove()
+# 11. reverse()
+# 12. sort()
+# Enter the operation number: 1
+# Result: 6

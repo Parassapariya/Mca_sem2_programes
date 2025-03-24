@@ -19,3 +19,8 @@ num1 = int(input("Enter first number: "))
 num2 = int(input("Enter second number: "))
 operator = input("Enter arithmetic operator (+, -, *, /): ")
 print(arithmetic_operations(num1, num2, operator))
+
+#Enter first number: 5
+#Enter second number: 2
+#Enter arithmetic operator (+, -, *, /): +
+#7

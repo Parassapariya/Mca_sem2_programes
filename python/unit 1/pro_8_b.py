@@ -8,3 +8,6 @@ def count_length(string):
 
 string = input("Enter a string: ")
 print("Length of string is: ", count_length(string))
+
+#Enter a string: hello world
+#Length of string is:  11
