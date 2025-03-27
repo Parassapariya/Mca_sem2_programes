@@ -1,0 +1,64 @@
+<script>
+
+function storeData() {
+    var name = document.getElementById("name").value;
+    //store data in local storage
+    localStorage.setItem("name", name);
+    //store data in session storage
+    sessionStorage.setItem("name", name);
+}
+
+//get data from local storage
+function getData() {
+    //get data from local storage
+    var name = localStorage.getItem("name");
+    //get data from session storage
+    var name1 = sessionStorage.getItem("name");
+    //display data
+    document.getElementById("result").innerHTML = name + "<br>" + name1;
+}
+
+function removeData() {
+    localStorage.removeItem("name");
+    sessionStorage.removeItem("name");
+}
+
+
+var person = {
+    name: "John",
+    age: 30,
+    city: "New York"
+};
+
+function storeObject() {
+    //store object data in local storage
+    localStorage.setItem("person", JSON.stringify(person));
+    //get object data from local storage
+    var person1 = JSON.parse(localStorage.getItem("person"));
+    //display in html
+    document.getElementById("result").innerHTML = person1.name + "<br>" + person1.age + "<br>" + person1.city;
+}
+
+
+
+</script>
+
+<html>
+    <head>
+        <title>Local Storage</title>
+    </head>
+
+    <body>
+        <h1>Local Storage</h1>
+        <input type="text" id="name" placeholder="Enter Name" />
+        <button onclick="storeData()">Store Data</button>
+        <button onclick="getData()">Get Data</button>
+        <button onclick="removeData()">Remove Data</button>
+        <button onclick="storeObject()">Store Object</button>
+        <p id="result"></p>
+    </body>
+</html>
+
+
+
+

@@ -1,0 +1,43 @@
+<!--counter app simple and store in localstorage also load after getlocalstorage value -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+   <!-- + - button   -->
+    <button id="add">+</button>
+    <button id="sub">-</button>
+    <p id="result">0</p>
+    <script>
+       
+        var count = localStorage.getItem("count");
+       
+        if(count == null){
+            count = 0;
+        }
+
+        // display count value
+        document.getElementById("result").innerHTML = count;
+
+        // add button
+        document.getElementById("add").onclick = function(){
+            count++;
+            document.getElementById("result").innerHTML = count;
+            // store count value in local storage
+            localStorage.setItem("count", count);
+        }
+        
+        // sub button
+        document.getElementById("sub").onclick = function(){
+            count--;
+            document.getElementById("result").innerHTML = count;
+            // store count value in local storage
+            localStorage.setItem("count", count);
+        }
+    </script>
+
+</body>
+</html>
