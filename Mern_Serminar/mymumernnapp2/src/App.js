@@ -1,15 +1,18 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import styled from 'styled-components';
+import { FaUser, FaBars, FaTimes } from 'react-icons/fa';
+
 import AboutUsFun from "./Component/AboutUsFun";
 import Counter from "./Component/Counter";
 import EventDemo from "./Component/EventDemo";
 import HeaderFun from "./Component/HeaderFun";
 import HomeClass from "./Component/HomeClass";
-import {BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import HookCounter from "./Component/HooksDemo/HookCounter";
 import HookSum from "./Component/HooksDemo/HookSum";
-import styled from 'styled-components';
+import FooterFun from "./Component/FooterFun";
 
-// Styled components
+// Styled Components
 const AppContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -17,8 +20,14 @@ const AppContainer = styled.div`
 `;
 
 const NavBar = styled.nav`
-  background: #2c3e50;
+  background: linear-gradient(135deg, #2c3e50 0%, #4a6491 100%);
   padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 1000;
 `;
 
 const NavList = styled.ul`
@@ -26,10 +35,21 @@ const NavList = styled.ul`
   list-style: none;
   margin: 0;
   padding: 0;
+  align-items: center;
 
   @media (max-width: 768px) {
+    position: fixed;
+    top: 0;
+    left: ${(props) => (props.mobileMenuOpen ? '0' : '-100%')};
+    width: 80%;
+    height: 100vh;
+    background: #2c3e50;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
+    padding: 2rem;
+    transition: left 0.3s ease;
+    z-index: 1001;
+    box-shadow: 5px 0 15px rgba(0, 0, 0, 0.2);
   }
 `;
 
@@ -37,8 +57,8 @@ const NavItem = styled.li`
   margin-right: 1.5rem;
 
   @media (max-width: 768px) {
-    margin-right: 0;
-    margin-bottom: 0.5rem;
+    margin-bottom: 1.5rem;
+    width: 100%;
   }
 `;
 
@@ -48,17 +68,89 @@ const NavLink = styled(Link)`
   font-size: 1.1rem;
   font-weight: 500;
   padding: 0.5rem 1rem;
-  border-radius: 4px;
   transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  position: relative;
 
   &:hover {
-    background: #34495e;
     color: #fff;
   }
 
   &.active {
-    background: #3498db;
-    color: white;
+    color: #3498db;
+  }
+
+  @media (max-width: 768px) {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1.2rem;
+  }
+`;
+
+const MobileMenuButton = styled.button`
+  display: none;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+
+  @media (max-width: 768px) {
+    display: block;
+  }
+`;
+
+const ProfileSection = styled.div`
+  position: relative;
+  display: flex;
+  align-items: center;
+`;
+
+const ProfileIcon = styled.div`
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #3498db 0%, #2c3e50 100%);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1.2rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+
+  &:hover {
+    transform: scale(1.05);
+  }
+`;
+
+const DropdownMenu = styled.div`
+  position: absolute;
+  top: 50px;
+  right: 0;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  width: 200px;
+  z-index: 100;
+  opacity: ${(props) => (props.isOpen ? 1 : 0)};
+  visibility: ${(props) => (props.isOpen ? 'visible' : 'hidden')};
+  transform: ${(props) => (props.isOpen ? 'translateY(0)' : 'translateY(-10px)')};
+  transition: all 0.3s ease;
+`;
+
+const DropdownItem = styled(Link)`
+  display: block;
+  padding: 0.8rem 1rem;
+  color: #2c3e50;
+  text-decoration: none;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: #f8f9fa;
+    color: #3498db;
   }
 `;
 
@@ -67,167 +159,86 @@ const MainContent = styled.main`
   padding: 2rem;
 `;
 
-const FooterContainer = styled.footer`
-  background: #2c3e50;
-  color: #ecf0f1;
-  padding: 2rem;
-  text-align: center;
+const Overlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  display: ${(props) => (props.mobileMenuOpen ? 'block' : 'none')};
 `;
 
-const FooterContent = styled.div`
-  max-width: 1200px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 2rem;
-  text-align: left;
+function Navigation() {
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  @media (max-width: 768px) {
-    grid-template-columns: 1fr;
-    text-align: center;
-  }
-`;
+  const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
+  const toggleMobileMenu = () => setMobileMenuOpen(!mobileMenuOpen);
 
-const FooterSection = styled.div`
-  h3 {
-    color: #3498db;
-    margin-bottom: 1rem;
-    font-size: 1.3rem;
-  }
-
-  p {
-    margin-bottom: 0.5rem;
-    line-height: 1.6;
-  }
-`;
-
-const FooterLinks = styled.ul`
-  list-style: none;
-  padding: 0;
-
-  li {
-    margin-bottom: 0.5rem;
-  }
-
-  a {
-    color: #bdc3c7;
-    text-decoration: none;
-    transition: color 0.3s ease;
-
-    &:hover {
-      color: #3498db;
-    }
-  }
-`;
-
-const SocialIcons = styled.div`
-  display: flex;
-  gap: 1rem;
-  margin-top: 1rem;
-  justify-content: ${props => props.center ? 'center' : 'flex-start'};
-
-  @media (max-width: 768px) {
-    justify-content: center;
-  }
-
-  a {
-    color: #ecf0f1;
-    font-size: 1.5rem;
-    transition: color 0.3s ease;
-
-    &:hover {
-      color: #3498db;
-    }
-  }
-`;
-
-const Copyright = styled.div`
-  margin-top: 2rem;
-  padding-top: 1rem;
-  border-top: 1px solid #34495e;
-  font-size: 0.9rem;
-  color: #bdc3c7;
-`;
-
-function FooterFun() {
   return (
-    <FooterContainer>
-      <FooterContent>
-        <FooterSection>
-          <h3>About Us</h3>
-          <p>We create amazing React applications with modern technologies and best practices.</p>
-          <SocialIcons>
-            <a href="#"><i className="fab fa-facebook"></i></a>
-            <a href="#"><i className="fab fa-twitter"></i></a>
-            <a href="#"><i className="fab fa-linkedin"></i></a>
-            <a href="#"><i className="fab fa-github"></i></a>
-          </SocialIcons>
-        </FooterSection>
+    <>
+      <NavBar>
+        <MobileMenuButton onClick={toggleMobileMenu}>
+          {mobileMenuOpen ? <FaTimes /> : <FaBars />}
+        </MobileMenuButton>
 
-        <FooterSection>
-          <h3>Quick Links</h3>
-          <FooterLinks>
-            <li><Link to="/">Home</Link></li>
-            <li><Link to="/aboutus">About Us</Link></li>
-            <li><Link to="/counter">Counter Demo</Link></li>
-            <li><Link to="/hookcounter">Hooks Demo</Link></li>
-          </FooterLinks>
-        </FooterSection>
+        <NavList mobileMenuOpen={mobileMenuOpen}>
+          <NavItem>
+            <NavLink to="/">Home</NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink to="/aboutus">About Us</NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink to="/btnclick">Event Demo</NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink to="/counter">Counter</NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink to="/hookcounter">Hooks Counter</NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink to="/hooksum">Hooks Sum</NavLink>
+          </NavItem>
+        </NavList>
 
-        <FooterSection>
-          <h3>Contact Info</h3>
-          <p><i className="fas fa-map-marker-alt"></i> 123 React Street, Component City</p>
-          <p><i className="fas fa-phone"></i> +1 (555) 123-4567</p>
-          <p><i className="fas fa-envelope"></i> info@reactapp.com</p>
-        </FooterSection>
-      </FooterContent>
+        <ProfileSection>
+          <ProfileIcon onClick={toggleDropdown}>
+            <FaUser />
+          </ProfileIcon>
+          <DropdownMenu isOpen={isDropdownOpen}>
+            <DropdownItem to="/profile">My Profile</DropdownItem>
+            <DropdownItem to="/settings">Settings</DropdownItem>
+            <DropdownItem to="/logout">Logout</DropdownItem>
+          </DropdownMenu>
+        </ProfileSection>
+      </NavBar>
 
-      <Copyright>
-        &copy; {new Date().getFullYear()} React App. All rights reserved.
-      </Copyright>
-    </FooterContainer>
+      <Overlay mobileMenuOpen={mobileMenuOpen} onClick={toggleMobileMenu} />
+    </>
   );
 }
 
-function App(props) {
+function App() {
   return (
     <Router>
       <AppContainer>
-       
-        <NavBar>
-          <NavList>
-            <NavItem>
-              <NavLink to="/">Home</NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink to="/aboutus">About Us</NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink to="/btnclick">Event Demo</NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink to="/counter">Counter</NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink to="/hookcounter">Hooks Counter</NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink to="/hooksum">Hooks Sum</NavLink>
-            </NavItem>
-          </NavList>
-        </NavBar>
-
+        <Navigation />
         <MainContent>
           <Routes>
-            <Route path="/" element={<HomeClass/>}/> 
-            <Route path="/aboutus" element={<AboutUsFun/>}/>
-            <Route path="/btnclick" element={<EventDemo/>}/>
-            <Route path="/counter" element={<Counter/>}/>
-            <Route path="/hookcounter" element={<HookCounter/>}/>
-            <Route path="/hooksum" element={<HookSum />}/>
+            <Route path="/" element={<HomeClass />} />
+            <Route path="/aboutus" element={<AboutUsFun />} />
+            <Route path="/btnclick" element={<EventDemo />} />
+            <Route path="/counter" element={<Counter />} />
+            <Route path="/hookcounter" element={<HookCounter />} />
+            <Route path="/hooksum" element={<HookSum />} />
+            <Route path="/profile" element={<div>Profile Page</div>} />
+            <Route path="/settings" element={<div>Settings Page</div>} />
           </Routes>
         </MainContent>
-        
         <FooterFun />
       </AppContainer>
     </Router>
